@@ -76,9 +76,12 @@ class OurTestScene : public Scene
 	// Constant buffers (CBuffers) for data that is sent to shaders
 	//
 
+
 	// CBuffer for transformation matrices
 	ID3D11Buffer* m_transformation_buffer = nullptr;
 	// + other CBuffers
+	ID3D11Buffer* m_lightCamera_buffer = nullptr;
+	ID3D11Buffer* m_material_buffer = nullptr;
 
 	//
 	// Scene content
@@ -88,11 +91,24 @@ class OurTestScene : public Scene
 	Model* m_quad;
 	Model* m_sponza;
 
+	Model* m_cube;
+	Model* m_cube2;
+	Model* m_cube3;
+
 	mat4f m_sponza_transform;
 	mat4f m_quad_transform;
 
+
+
+
+
+	mat4f m_cube_transform;
+	mat4f m_cube2_transform;
+	mat4f m_cube3_transform;
+
 	mat4f m_view_matrix;
 	mat4f m_projection_matrix;
+
 
 	// Misc
 	float m_angle = 0;			// A per-frame updated rotation angle (radians)...
@@ -100,9 +116,18 @@ class OurTestScene : public Scene
 	float m_camera_velocity = 5.0f;	// Camera movement velocity in units/s
 	float m_fps_cooldown = 0;
 
+	float cube2OrbitRotation, cube3OrbitRotation;
+	float cube2SelfRotation, cube3SelfRotation;
+
 	void InitTransformationBuffer();
 
 	void UpdateTransformationBuffer(mat4f model_to_world_matrix, mat4f world_to_view_matrix, mat4f projection_matrix);
+
+	void InitLightCameraBuffer();
+	void UpdateLightCameraBuffer();
+
+	void InitMaterialBuffer();
+	void UpdateMaterialBuffer(const Material& material);
 
 public:
 	/**
@@ -113,6 +138,8 @@ public:
 	 * @param window_height Current window height.
 	*/
 	OurTestScene(ID3D11Device* dxdevice, ID3D11DeviceContext* dxdevice_context,	int window_width, int window_height);
+	
+
 
 	/**
 	 * @brief Initializes all resources held by the scene.

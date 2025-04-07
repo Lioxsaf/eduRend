@@ -9,6 +9,7 @@
 
 #include "vec\vec.h"
 #include "vec\mat.h"
+#include "inputhandler.h"
 
 /**
  * @brief Manages camera data, also handles generation of view and projection matrices.
@@ -58,10 +59,19 @@ public:
 	*/
 	linalg::mat4f ProjectionMatrix() const noexcept;
 
+	void GetMouseMovement(long dx, long dy);
+
+	const linalg::vec3f& GetPosition() const noexcept;
+
 private:
 	// Aperture attributes
 	float m_vertical_fov;
 	float m_aspect_ratio;
+	float m_yaw = 0;
+	float m_pitch = 0;
+	float m_sens = 0;
+	long mousedx = 0;
+	long mousedy = 0;
 
 	// Clip planes in view space coordinates
 	// Evrything outside of [m_near_plane, m_far_plane] is clipped away on the GPU side
